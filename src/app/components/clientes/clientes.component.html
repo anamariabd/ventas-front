@@ -1,0 +1,73 @@
+<br />
+<div class="row">
+  <h1><small> Clientes </small></h1>
+</div>
+<br/>
+<div class = "row">
+  <div class="col">
+      <button class="btn btn-dark" (click)="openModal(Modal,'Agregar', -1)" >+ Registrar cliente</button>
+  </div>
+</div>
+<app-buscador> </app-buscador>
+<br />
+<div class="row">
+  <ul class="list-group" *ngFor="let cliente of clientes">
+    <li class="list-group-item">
+      <div class="flex-shrink-0">
+      <b> Razón social: </b> {{ cliente.razonSocial }}
+      <br>
+      <b> Identificación: </b> {{cliente.identificacion}}
+      <br>
+      <b> Tipo de identificación: </b> {{cliente.tipoIden}}
+      </div>
+      <div class="d-flex flex-row-reverse">
+        <div class="col">
+            <button class="btn btn-info">ver más</button>
+            {{' '}}
+            <button class="btn btn-warning" (click)="openModal(Modal,'Editar', cliente.cliente)" >Editar</button>
+        </div>
+      </div>
+    </li>
+    <br />
+  </ul>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true" #Modal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 *ngIf=" Action == 'Agregar' " class="modal-title">Registrar cliente</h5>
+        <h5 *ngIf=" Action == 'Editar' " class="modal-title">Editar cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form class="row g-3" [formGroup]="formCliente" (ngSubmit)="onSubmit(formCliente.value)">
+              <div class="col-md-12">
+                  <label class="form-label">Razon social</label>
+                  <input type="text"  formControlName="razonSocial" class="form-control" placeholder="Razon social">
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Tipo de identificación</label>
+                <select id="inputState" formControlName="tipo_identificacion" class="form-select">
+                  <option selected>Seleccionar tipo...</option>
+                  <option value="1">C.C.</option>
+                  <option value="2">T.I.</option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                  <label class="form-label">N° identificación</label>
+                  <input type="text" formControlName="identificacion" class="form-control" placeholder="N° identificación">                  
+              </div>
+              <div class="d-flex flex-row-reverse">
+              <div class="row-sm-4">
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+                {{" "}}
+                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              </div>   
+          </div>             
+            </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<br />
+<div class="row">
+  <h1><small> Reportes </small></h1>
+</div>
+<br/>
+
+<br/>
+<div  class="col-6">
+    <h2>Producto más vendido</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Mes</th>
+        <th scope="col">Nombre del producto</th>
+        <th scope="col">Total facturado</th>
+      </tr>
+    </thead>
+    <tbody >
+      <tr *ngFor="let f of productArray">
+        <td>{{f.fecha | date:'MMMM'}} de {{f.fecha | date:'y'}}</td>
+        <td>{{f.nombre}}</td>
+        <td>{{f.total}}</td>
+      </tr> 
+    </tbody>    
+  </table>
+</div>
+<br/>
+<div  class="col-6">
+    <h2>Clientes con más compras</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Año</th>
+        <th scope="col">Nombre del cliente</th>
+        <th scope="col">Total facturado</th>
+      </tr>
+    </thead>
+    <tbody >
+      <tr>
+        <td>asd</td>
+        <td>asd</td>
+        <td>asd</td>
+      </tr> 
+    </tbody>    
+  </table>
+</div>

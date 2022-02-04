@@ -1,0 +1,78 @@
+<br/>
+<div class="row"><h1><small> Usuarios </small></h1></div>
+<br/>
+<div class = "row">
+    <div class="col">
+        <button class="btn btn-dark" (click)="openModal(Modal, 'Agregar', '-1')" >+ Registrar usuario</button>
+    </div>
+    <app-buscador></app-buscador>
+</div>
+<br/>
+<div class="row">
+  <ul class="list-group" *ngFor="let usuario of usuarios">
+    <li class="list-group-item">
+      <div class="flex-shrink-0">
+      <b> Nombre: </b> {{ usuario.nombre }}
+      <br/>
+      <b> Apellido: </b> {{usuario.apellido }}
+      <br/>
+      <b> Usuario: </b> {{ usuario.usuario}}      
+      <br/>
+      <b> Tipo de usuario: </b> {{usuario.perfil}}
+      </div>
+      <br/>
+        <div class="col">
+            <button class="btn btn-warning" (click)="openModal(Modal, 'Editar', usuario.idUsuario)" >Editar</button>
+        </div>
+    </li>
+    <br />
+  </ul>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" #Modal>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" >Nuevo usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="row g-3" [formGroup]="newUsuario" (ngSubmit)="onSubmit(newUsuario.value)" >
+                <div class="col-md-6">
+                    <label class="form-label">Nombre</label>
+                    <input formControlName="nombre" type="text" class="form-control" id="inputAddress" placeholder="Nombre">
+
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Apellido</label>
+                    <input formControlName="apellido"  type="text" class="form-control" id="inputAddress2" placeholder="Apellido">                  
+
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Usuario</label>
+                    <input formControlName="usuario" type="text" class="form-control" id="usuario" placeholder="Usuario"> 
+                </div>
+                <div class="col-12">                   
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" formControlName="contraseña" class="form-control" id="inputPassword" placeholder="Contraseña">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Perfil</label>
+                  <select formControlName="idPerfil" id="inputState" class="form-select">
+                    <option selected>Escoger...</option>
+                    <option value="1">Cajero</option>
+                    <option value="2">Administrador</option>
+                  </select>
+              </div>
+              <div class="d-flex flex-row-reverse">
+                <div class="row-sm-4">
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+                  {{" "}}
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>   
+               </div>  
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>

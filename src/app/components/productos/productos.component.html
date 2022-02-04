@@ -1,0 +1,71 @@
+<br />
+<div class="row">
+  <h1><small> Productos </small></h1>
+</div>
+<br/>
+<div class = "row">
+    <div class="col">
+        <button class="btn btn-dark" (click)="openModal(Modal,'Agregar','-1')" >+ Registrar producto</button>
+    </div>
+    <div class="Col">
+<app-buscador> </app-buscador>
+    </div>
+</div>
+<br />
+<div class="row">
+  <ul class="list-group" *ngFor="let producto of productos">
+    <li class="list-group-item">
+      <div class="flex-shrink-0">
+      <b> Nombre: </b> {{ producto.nombre }}
+      <br/>
+      <b> Estado: </b> {{producto.estado}}
+      <br/>
+      <b> Valor Unitario: </b> {{producto.valorUnitario}}      
+      </div>
+      <br/>
+        <div class="col">
+            <button class="btn btn-warning" (click)="openModal(Modal,'Editar', producto.id)" >Editar</button>
+        </div>
+    </li>
+    <br />
+  </ul>
+</div>
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true" #Modal>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 *ngIf=" Action == 'Agregar' " class="modal-title">Registrar producto</h5>
+          <h5 *ngIf=" Action == 'Editar' " class="modal-title">Editar producto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="row g-3" [formGroup]="newProduct" (ngSubmit)="onSubmit(newProduct.value)">
+                <div class="col-md-12">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" formControlName="nombre" class="form-control" placeholder="Nombre">
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Valor unitario</label>
+                    <input type="number" formControlName="valorUnitario" class="form-control" placeholder="Valor unitario">                  
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Estado</label>
+                  <select id="inputState" formControlName="estado" class="form-select">
+                    <option selected>Choose...</option>
+                    <option value="nuevo">Nuevo</option>
+                    <option value="usado">Usado</option>
+                  </select>
+                </div>
+                <div class="d-flex flex-row-reverse">
+                <div class="row-sm-4">
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+                  {{" "}}
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>   
+               </div>             
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>

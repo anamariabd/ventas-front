@@ -1,0 +1,115 @@
+<br />
+<div class="row">
+  <h1><small> Facturacion </small></h1>
+</div>
+<br/>
+<div class = "row justify-content-start">
+ <div class="col-3">
+    <button class="btn btn-dark" (click)="openModal(Modal,'cliente')">+ Seleccionar cliente</button>
+</div>
+<div *ngIf="cliente" class="col-6">
+    <button class="btn btn-dark" (click)="openModal(Modal,'producto')">+ Agregar producto</button>
+</div>
+</div>
+<br/>
+<div *ngIf="cliente">
+  <div class="row">
+     <h5>Razón social: {{cliente.razonSocial}}</h5>
+  </div>
+  <div class="row">
+    <h5>Identifiación: {{cliente.identificacion}}</h5>
+ </div>
+</div>
+<br/>
+<div *ngIf="cliente" class="col">
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Código</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Valor unitario</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Total(V. unit x cantidad)</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let product of productosFact" >
+      <tr>
+        <th scope="row">{{product.id}}</th>
+        <td>{{product.nombre}}</td>
+        <td>{{product.valorUnitario}}</td>
+        <td>{{product.cantidad}}</td>
+        <td>{{product.total}}</td>
+        <td> <button (click)="eliminarItem(product.id)" class="btn btn-outline-primary">X</button>
+      </tr> 
+    </tbody>    
+     <b> Valor Total: </b> {{Total}}
+  </table>
+  <button (click)="GuardarFactura()" type="submit" class="btn btn-primary">Guardar</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true" #Modal>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 *ngIf = "TipoConsulta == 'producto' " class="modal-title">Productos</h5>
+          <h5 *ngIf = "TipoConsulta == 'cliente' " class="modal-title">Clientes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form *ngIf = "TipoConsulta == 'producto'" 
+                [formGroup]="addProduct" 
+                (ngSubmit)="onSubmitProduct(addProduct.value)" 
+                class="row g-3">
+                <div *ngIf = "TipoConsulta == 'producto'" class="col-md-6">
+                  <label class="form-label">Producto</label>
+                  <select formControlName="id" id="inputState"class="form-select">
+                    <option selected>Escoger...</option>
+                    <option                  
+                     *ngFor="let producto of productos" value="{{producto.id}}">{{producto.nombre}}</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Cantidad</label>
+                    <input formControlName="cantidad" type="number" class="form-control" placeholder="Cantidad">                  
+                </div>
+                <div class="d-flex flex-row-reverse">
+                <div class="row-sm-4">
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+                  {{" "}}
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>    
+                </div>             
+              </form>
+           <form *ngIf = "TipoConsulta == 'cliente'" 
+           class="row g-3"
+           [formGroup]="selectCliente" 
+           (ngSubmit)="onSubmitClient(selectCliente.value)">
+              <div class="col-md-6">
+                  <label class="form-label">Identificación</label>
+                  <select id="inputState"class="form-select" formControlName="cliente">
+                    <option selected>Escoger...</option>
+                    <option                  
+                     *ngFor="let cliente of clientes" value="{{cliente.cliente}}">{{cliente.identificacion}}</option>
+                  </select>
+              </div>
+              <div class="col-md-6">
+                  <label class="form-label">Tipo identificación</label>
+                  <select id="inputState" class="form-select" formControlName="tipo_identificacion">
+                    <option selected>Escoger...</option>
+                    <option                  
+                     *ngFor="let tipo of tipoIdent" value="{{tipo.tipo_identificacion}}">{{tipo.abreviatura}}</option>
+                  </select>
+              </div>
+              <div class="d-flex flex-row-reverse">
+                <div class="row-sm-4">
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Seleccionar</button>
+                  {{" "}}
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>   
+              </div>             
+           </form>
+        </div>
+      </div>
+    </div>
+  </div>
