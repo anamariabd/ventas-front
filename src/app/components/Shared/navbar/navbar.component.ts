@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TokenService } from 'src/app/services/token.service';
 import { Router } from "@angular/router"
@@ -9,6 +9,8 @@ import { Router } from "@angular/router"
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+
+  @Input() Perfil: any;
 
   constructor(private activatedRoute: ActivatedRoute, private tokenService: TokenService,
     private _router: Router) { }

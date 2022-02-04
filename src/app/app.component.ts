@@ -8,22 +8,19 @@ import { Router, NavigationStart, NavigationEnd, NavigationError, NavigationCanc
 })
 export class AppComponent implements OnInit{
   
-  perfil = localStorage.getItem('perfil')
+  perfil:any = "";
   title = 'ventas';
   //user = localStorage
- // url = window.location.pathname;
+  url = window.location.pathname;
   
  constructor(router:Router) {
   router.events.forEach((event) => {
-    if (event instanceof NavigationStart) {
+    if (event instanceof RoutesRecognized) {
       console.log(event)
+      this.url = window.location.pathname;
       this.perfil = localStorage.getItem('perfil')
       console.log(this.perfil)
     }
-    // NavigationEnd
-    // NavigationCancel
-    // NavigationError
-    // RoutesRecognized
   });
 }
   

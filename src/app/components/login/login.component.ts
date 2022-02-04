@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import * as bootstrap from 'bootstrap';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Router } from "@angular/router"
 import { TokenService } from 'src/app/services/token.service'
@@ -12,8 +13,11 @@ import { TokenService } from 'src/app/services/token.service'
 export class LoginComponent implements OnInit {
 
   loginUser: any;
+  newUsuario: any;
+  usuarios: any;
+  Modal: any;
 
-  constructor(private LoginService: UsuarioService,
+  constructor(private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     private _router: Router,
     private tokenService: TokenService) {
@@ -21,27 +25,58 @@ export class LoginComponent implements OnInit {
     username: '',
     password: '' 
     });
+
+    this.newUsuario = this.formBuilder.group({
+      nombre: '',
+      apellido: '',
+      contraseña: '',
+      usuario: '',
+      idPerfil: null
+    }); 
   }
 
   ngOnInit(): void {
   }
-
+  openModal(element: any) {
+     
+    this.Modal = new bootstrap.Modal(element,{} ) 
+    this.Modal?.show()
+  }
   onSubmit(usuario: any) {
     
-    console.log(usuario)    
-    this.LoginService.loginUsuario(usuario).subscribe(
+    this.usuarioService.loginUsuario(usuario).subscribe(
       {
         next: (data) => {
-          console.log(data.perfil);
           this.tokenService.setToken(data.accessToken)
           localStorage.setItem('perfil', data.perfil)
 
           if(data.perfil == 'Cajero'){
             this._router.navigate(['/facturacion']);
           }
+          if(data.perfil == 'Administrador'){
+            this._router.navigate(['/reportes']);
+          }
+        },
+        
+        error: (e) => {
+          console.error(e);
+          alert("Usuario o contraseña incorrectos")
         }
 
       }
     )
   }
+
+  registrarUsuario(user: any) {
+
+    user.perfil = { idPerfil: user.idPerfil }
+    console.log(user);
+    this.usuarioService.createUsuario(user).subscribe({
+      next: (data) => {  
+        this.usuarios.push(user);
+      },
+      error: (e) => console.error(e)
+    }); 
+  }
+
 }

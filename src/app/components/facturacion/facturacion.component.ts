@@ -97,6 +97,10 @@ export class FacturacionComponent implements OnInit {
             localStorage.setItem('idCliente', this.cliente.cliente)    
             localStorage.setItem('Cliente', JSON.stringify(this.cliente));
           }
+        },
+        error: (e) => {
+          delete this.cliente;
+          alert("El cliente no ha sido encontrado")
         }
       }
     )
@@ -104,21 +108,15 @@ export class FacturacionComponent implements OnInit {
   }
 
   GuardarFactura() {
-    console.log("guardar");
     console.log(localStorage.getItem('Cliente'))
     var id:number = +localStorage.getItem('idCliente')!
 
-    console.log("id: ", id)
-    
     var idCliente = {cliente: id};
 
-    this.factura = {
-      cliente: idCliente
-    }
+    this.factura = {cliente: idCliente}
 
     var factDetalles: Detalles = {}
   
-    console.info(this.factura)
     this.facturaService.createFactura(this.factura).subscribe(
       {
         next: (data) => { console.log(data.consecutivo)
@@ -130,10 +128,15 @@ export class FacturacionComponent implements OnInit {
               valorUnitario: this.productosFact[i].total,
               cantidad: this.productosFact[i].cantidad
                }
-               console.warn(factDetalles)
                this.facturaService.createDetalles(factDetalles).subscribe(
-              { next: (res) => console.log("Registrado") }
+              { error: (e) => alert("Error") }
             ) 
+          } 
+          if (factDetalles) {
+            alert("Facturización realizada");
+            localStorage.removeItem('Productos');
+            this.productosFact = [];
+            this.Total = 0;
           } 
         },
         error: (e) => { console.error(e); console.info("ERROR")}
@@ -151,6 +154,7 @@ export class FacturacionComponent implements OnInit {
       }
     }
 
+    this.Total -= this.productoFact.total
     this.productosFact = List;
     localStorage.setItem('Productos', JSON.stringify(List));    
      this.productosFact = JSON.parse(localStorage.getItem('Productos')!.toString());

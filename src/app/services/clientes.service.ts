@@ -35,6 +35,9 @@ export class ClientesService {
   updateCliente(cliente: any, id:any): Observable<any>{
     return this.http.put(`${baseUrl}/${id}`, cliente);
   }
+  getClientePorAño(): Observable<any> {
+    return this.http.get(baseUrl+"/compras")    
+  }
 }
 
 export class Cliente {

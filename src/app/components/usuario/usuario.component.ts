@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as bootstrap from 'bootstrap';
 import { FormBuilder } from '@angular/forms';
-import { UsuarioService, Usuario, Perfil } from 'src/app/services/usuario.service';
+import { UsuarioService, Perfil } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-usuario',
@@ -65,9 +65,6 @@ export class UsuarioComponent implements OnInit {
 
   registrarUsuario(user: any) {
 
-   // console.log(user)
-    
-  //  this.newUsuario = user;
     user.perfil = { idPerfil: user.idPerfil }
     console.log(user);
     this.usuarioService.createUsuario(user).subscribe({
