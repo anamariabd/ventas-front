@@ -77,10 +77,10 @@ export class FacturacionComponent implements OnInit {
           this.productoFact.cantidad = Data.cantidad;
           this.productoFact.total = Data.cantidad * this.productoFact.valorUnitario;
                
-          if (localStorage.getItem('Productos')) {
+        //  if (localStorage.getItem('Productos')) {
             this.productosFact.push(this.productoFact)
             this.Total += this.productoFact.total
-          } 
+          
           localStorage.setItem('Productos', JSON.stringify(this.productosFact));
         }
       }
