@@ -22,8 +22,12 @@ export class UsuarioComponent implements OnInit {
     this.usuarioService.getUsuarios().subscribe(
       {
         next: (data: any) => {
+          
           this.usuarios = data;
-          this.usuarios[0].perfil = data[0].perfil.nombre;
+          for (let i = 0; data.length; i++)
+            this.usuarios[i].perfil = data[i].perfil.nombre;
+          
+          console.log(data)
         }
       }
     )
@@ -70,6 +74,7 @@ export class UsuarioComponent implements OnInit {
     this.usuarioService.createUsuario(user).subscribe({
       next: (data) => {  
         this.usuarios.push(user);
+        console.log(data);
       },
       error: (e) => console.error(e)
     }); 

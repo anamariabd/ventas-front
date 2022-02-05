@@ -28,7 +28,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <form class="row g-3" [formGroup]="newUsuario" (ngSubmit)="onSubmit(newUsuario.value)" >
+          <form class="row g-3" [formGroup]="newUsuario" (ngSubmit)="registrarUsuario(newUsuario.value)" >
               <div class="col-md-6">
                   <label class="form-label">Nombre</label>
                   <input formControlName="nombre" type="text" class="form-control" id="inputAddress" placeholder="Nombre">

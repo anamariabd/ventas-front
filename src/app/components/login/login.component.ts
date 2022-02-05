@@ -73,7 +73,13 @@ export class LoginComponent implements OnInit {
     console.log(user);
     this.usuarioService.createUsuario(user).subscribe({
       next: (data) => {  
-        this.usuarios.push(user);
+        if(user.idPerfil  == '1'){
+          this._router.navigate(['/facturacion']);
+        }
+        if(user.idPerfil  == '2'){
+          this._router.navigate(['/reportes']);
+        }
+    console.log(data);
       },
       error: (e) => console.error(e)
     }); 
